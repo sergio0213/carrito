@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition >
+        <h:form style="text-align: -webkit-right;">
+           <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+               <p:commandButton icon="ui-icon-person"  />
+    </h:outputLink>
+  <p:growl id="growl" sticky="true" showDetail="true" life="1000" />
+  <p:menuButton value="Bienvenido #{usuarioBean.cliente.usuario}">
+                <p:menuitem value="Registrarse"  icon="ui-icon-plusthick" outcome="registroc.xhtml"/>
+                <p:menuitem rendered="#{usuarioBean.login}" value="Guardar Carrito"  icon="ui-icon-disk"/>
+                <p:menuitem value="Volver a Inicio "  icon="ui-icon-arrowrefresh-1-w" outcome="index.xhtml"/>
+                <p:menuitem value="Borrar Todo"  ajax="false" icon="ui-icon-close"/>
+                <p:separator />
+                <p:menuitem rendered="#{usuarioBean.login}" value="Cerrar Sesión" url="http://www.primefaces.org" icon="ui-icon-extlink" />
+            </p:menuButton>
+
+
+            <p:dialog header="Login" widgetVar="dlg" resizable="false" modal="true">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{usuarioBean.cliente.usuario}" required="true" label="username" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password id="password" value="#{usuarioBean.cliente.clave}" required="true" label="password" />
+
+                    <f:facet name="footer" >
+                        <p:commandButton update="growl" value="Login"  actionListener="#{usuarioBean.loginCarrito()}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
+
+<script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+
+        </h:form>
+    </ui:composition>
+</html>
+

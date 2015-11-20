@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./plantilla/plantilla.xhtml">
+
+            <ui:define name="top">
+                <ui:include src="./plantilla/cabecera.xhtml"/>
+            </ui:define>
+
+
+            <ui:define name="content">
+                <h1>Mis Compras </h1>
+                <f:view>
+                    <h:form>
+                        <p:dataGrid var="pro" value="#{carritoBean.productos}" columns="3"
+
+                                    rows="6" paginator="true" id="cars"
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    rowsPerPageTemplate="6,12,16">
+
+                            <f:facet name="header">
+                                My Carrito
+                            </f:facet>
+
+                            <p:panel header="#{pro.descripcion}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:graphicImage name="./images/#{pro.idproducto}.jpg"/> 
+
+                                    <h:outputText value="#{pro.descripcion}" />
+                                    <h:outputText value="$ #{pro.valor}" />
+
+                                </h:panelGrid>
+                            </p:panel>
+
+                        </p:dataGrid>
+
+                        <p:dialog header="Car Info" widgetVar="carDialog" 
+                                  modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="carDetail" style="text-align:center;">
+
+                                <h:outputText value="Se Agrego el producto al Carrito" />
+
+                            </p:outputPanel>
+                        </p:dialog>
+                        <br/>
+                        <br/>
+                 
+                    </h:form>
+                </f:view>
+            </ui:define>
+
+
+        </ui:composition>
+
+    </body>
+</html>
