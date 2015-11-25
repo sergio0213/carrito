@@ -18,35 +18,36 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 @SessionScoped
-
 public class CarritoBean implements Serializable {
 
     private List<Producto> productos;
-    Pedido pedido;
-    Clientepedido clientepedido;
-    int idpedido;
-    PedidoJpaController contr ;
+    private Pedido pedido;
+    private Clientepedido clientepedido;
+    private int idpedido=33;
+    PedidoJpaController contr;
+    
     
     public CarritoBean() {
-        contr= new PedidoJpaController();
-        pedido = new  Pedido();
+        System.out.println("pedido constructor" + idpedido);
+        contr = new PedidoJpaController();
+        pedido = new Pedido();
         ProductoJpaController cnt = new ProductoJpaController();
         productos = cnt.findProductoEntities();
-        idpedido = contr.getPedidoCount()+1;
-        System.out.println("Constructor com.unbosque.carrito.beans.CarritoBean.<init>()");
+idpedido=34;
+        System.out.println("Constructor carrito.beans.CarritoBean.<init>()");
     }
-    
-    
+
     public void agregar(int idproducto) {
-    
+
         try {
-             System.out.println("beans.CarritoBean.agregar() producto ="+idproducto);
-            contr= new PedidoJpaController();
+            System.out.println("product =" + idproducto);
+            System.out.println("beans.CarritoBean.agregar() pedido =" + this.idpedido);
+            contr = new PedidoJpaController();
             pedido.setIdpedido(BigDecimal.valueOf(this.idpedido));
             pedido.setCantidad(BigInteger.ONE);
             pedido.setIdproducto(BigInteger.valueOf(idproducto));
             contr.create(pedido);
-            System.out.println("Se agrego el producto ="+idproducto);
+            System.out.println("Se agrego el producto =" + idproducto);
         } catch (Exception ex) {
             Logger.getLogger(CarritoBean.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error agregar");
@@ -61,7 +62,5 @@ public class CarritoBean implements Serializable {
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-
-   
 
 }
