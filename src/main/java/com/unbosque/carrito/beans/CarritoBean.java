@@ -26,25 +26,30 @@ public class CarritoBean implements Serializable {
     Clientepedido clientepedido;
     int idpedido;
     PedidoJpaController contr ;
+    
     public CarritoBean() {
         contr= new PedidoJpaController();
+        pedido = new  Pedido();
         ProductoJpaController cnt = new ProductoJpaController();
         productos = cnt.findProductoEntities();
         idpedido = contr.getPedidoCount()+1;
+        System.out.println("Constructor com.unbosque.carrito.beans.CarritoBean.<init>()");
     }
     
     
     public void agregar(int idproducto) {
     
         try {
+             System.out.println("beans.CarritoBean.agregar() producto ="+idproducto);
             contr= new PedidoJpaController();
             pedido.setIdpedido(BigDecimal.valueOf(this.idpedido));
-            pedido.setCantidad(pedido.getCantidad().add(BigInteger.ONE));
+            pedido.setCantidad(BigInteger.ONE);
+            pedido.setIdproducto(BigInteger.valueOf(idproducto));
             contr.create(pedido);
-            System.out.println("com.unbosque.carrito.beans.CarritoBean.agregar() producto ="+idproducto);
+            System.out.println("Se agrego el producto ="+idproducto);
         } catch (Exception ex) {
             Logger.getLogger(CarritoBean.class.getName()).log(Level.SEVERE, null, ex);
-             System.out.println("Error agregar");
+            System.out.println("Error agregar");
         }
 
     }
