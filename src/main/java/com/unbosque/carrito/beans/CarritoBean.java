@@ -23,7 +23,7 @@ public class CarritoBean implements Serializable {
     private List<Producto> productos;
     private Pedido pedido;
     private Clientepedido clientepedido;
-    private int idpedido=33;
+    private int idpedido;
     PedidoJpaController contr;
     
     
@@ -33,7 +33,7 @@ public class CarritoBean implements Serializable {
         pedido = new Pedido();
         ProductoJpaController cnt = new ProductoJpaController();
         productos = cnt.findProductoEntities();
-idpedido=34;
+        idpedido=contr.getPedidoCount()+1;
         System.out.println("Constructor carrito.beans.CarritoBean.<init>()");
     }
 
